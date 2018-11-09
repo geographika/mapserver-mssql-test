@@ -1,0 +1,30 @@
+MAP
+    CONFIG "MS_ERRORFILE" "tmp.log"
+    DEBUG 5
+    EXTENT -137 29 -53 88
+    SIZE 1024 768
+    WEB
+        METADATA
+            "ows_enable_request" "*"
+            "wfs_srs" "EPSG:4326"
+            "ows_onlineresource" "http://localhost/mapserver/?"
+        END
+    END
+    LAYER
+        NAME "test"
+        TYPE LINE
+        TEMPLATE "fake.html"
+        CONNECTION "Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;"
+        CONNECTIONTYPE PLUGIN
+        DEBUG 5
+        DATA "geom FROM (SELECT fid, name, geom FROM Test) AS tbl USING UNIQUE fid USING SRID=2157"
+        METADATA
+            "gml_featureid" "fid"
+            "gml_include_items" "all"
+            "gml_types" "auto"
+        END
+        #PLUGIN "D:\MapServer\release-1911-x64-gdal-2-3-mapserver-7-0\bin\ms\plugins\mssql2008\msplugin_mssql2008.dll"
+        PLUGIN "D:\MapServer\release-1911-x64-gdal-2-3-2-mapserver-7-2-1\bin\ms\plugins\mssql2008\msplugin_mssql2008.dll"
+        PROCESSING "CLOSE_CONNECTION=DEFER"
+    END
+END
